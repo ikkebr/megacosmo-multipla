@@ -1,0 +1,80 @@
+{% load humanize %}
+<div class="wave">
+				<h3>Análise de Superfície - {{ target }}</h3>
+
+			
+				<table class='table table-bordered'>
+						<tbody>
+						
+						<tr>
+							<td>Líder</td>
+							<td>{{ target.ruler }}</td>
+						</tr>				
+
+						<tr>
+							<td>Planeta</td>
+							<td>{{ target.name }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Construções</td>
+							<td>{{ target.buildings }}</td>
+						</tr>	
+						
+
+						<tr>
+							<td>Minas de Metal</td>
+							<td>{{ target.mines_metal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Minas de Cristal</td>
+							<td>{{ target.mines_cristal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Minas de Urânio</td>
+							<td>{{ target.mines_uranium|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Minas de Ouro</td>
+							<td>{{ target.mines_gold|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Fábrica de Caças e Corvetas</td>
+							<td>{{ target.factory_fico|intcomma }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Fábrica de Fragatas e Cruzadores</td>
+							<td>{{ target.factory_frcr|intcomma }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Fábrica de Naves Mãe</td>
+							<td>{{ target.factory_bssp|intcomma }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Centro de Segurança</td>
+							<td>{{ target.security_center|intcomma }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Centro de Inteligência</td>
+							<td>{{ target.waveamp|intcomma }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Centro de Contra Inteligência</td>
+							<td>{{ target.waveblock|intcomma }}</td>
+						</tr>	
+						
+
+						
+
+					</tbody>
+				</table>
+</div><!--wave-->

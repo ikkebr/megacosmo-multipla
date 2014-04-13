@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Produção{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Produção</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+		
+	<div class='well'>
+    	<h1>Naves</h1>
+				<p class='lead'>Para produzir naves é necessário de pelos menos uma fábrica.</p>
+				<p>Nossas linhas de produção podem produzir simultaneamente no máximo {{ planet.max_build_fi|intcomma }} caças, {{ planet.max_build_co|intcomma }} corvetas, {{ planet.max_build_fr|intcomma }} fragatas, {{ planet.max_build_cr|intcomma }} cruzadores e {{ planet.max_build_bs|intcomma }} naves mãe.</p>
+				
+				<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th align='center'>Nome</th>
+							<th align='center'>Classe</th>
+							<th align='center'>Alvo</th>
+							<th align='center'>Descrição</th>
+							  
+							<!--th align='center'>Iniciativa</th>
+							<th align='center'>Ataque</th>
+							<th align='center'>Defesa</th-->
+                              
+							<th align='center'>Metal</th>
+							<th align='center'>Cristal</th>
+							<th align='center'>Ouro</th>
+							<th align='center'>Estoque</th>
+							<th align='center'>Quantidade</th>
+						</tr>
+					</thead>
+		
+					<tbody>
+
+						<form action='{% url production %}' method='post'>
+						{% csrf_token %}
+						
+						{% for ship in ships %}
+						<tr>
+							<td>{{ ship.name }}</td>
+							<td>{{ ship.get_class_as_str }}</td>
+							<td>{{ ship.get_target_as_str }}</td>
+							<td>{{ ship.get_skill_as_str }}</td>
+							<!--td>{{ ship.init }}</td>
+							<td>{{ ship.attack }}</td>
+							<td>{{ ship.defense }}</td-->
+							<td>{{ ship.cost_metal|intcomma }}</td>
+							<td>{{ ship.cost_cristal|intcomma }}</td>
+							<td>{{ ship.cost_gold|intcomma }}</td>
+							
+							<td> quantidade </td>
+							<td><input class='input-small' placeholder='0' min="0" type='number' name='ship-{{ ship.id }}' /></td>
+						</tr>
+						{% endfor %}
+						
+						<tr>
+							<td colspan="12" style='text-align: center;'><button type='submit' class='btn btn-primary'>Produzir</button></td>
+						</tr>
+						</form>
+						
+					</tbody>
+				</table>
+		</div>	
+	
+		<div class='well'>
+			<h2>Naves em Produção</h2>
+			
+			<table class="table table-striped">
+
+				<thead>
+					<tr>
+						<th>Nave</th>
+						<th>Quantidade</th>
+						<th>Tempo Restante</th>
+						<th>Ação</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+
+					
+					{% for each in planet.shipyard_set.all %}
+					<tr>
+						<td>{{ each.ship.name }}</td>
+						<td>{{ each.quantity|intcomma }}</td>
+						<td>{{ each.time }} hora{{ each.time|pluralize }} até a conclusão</td>
+						<td><a href='{% url cancel_production each.id %}' class='btn btn-danger'>Cancelar Produção</a></td>
+					</tr>
+					{% endfor %}
+					
+				</tbody>
+			</table>
+		</div>
+{% endblock %}	

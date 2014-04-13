@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Recursos{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Recursos</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+
+{% block content %}
+
+			
+        <h1>Recursos</h1>
+        
+        
+		<div class='well'>
+			<h2>Produção</h2>	            
+			
+			<table class="table table-striped table-bordered">
+				<thead>
+								<tr>
+									<th>Tipo</th>
+									<th>Asteróides</th>
+									<th align="right">Produção</th>
+									<th align="right">Bônus</th>
+									<th>Minas</th>
+									<th align="right">Produção</th>
+									<th align="right">Bônus</th>
+									<th>Total por Turno</th>
+								</tr>
+				</thead>
+		
+							<tbody>
+								<tr>
+									<td width="12%">Metal</td>
+									<td width="12%">{{ planet.roids_metal|intcomma }}</td>
+									<td align="right" width="12%">{{ planet.roids_metal_production|intcomma }}</td>
+									<td align="right" width="12%">{{ planet.roids_bonus_str }}%</td>
+									<td width="12%">{{ planet.mines_metal }}</td>
+									<td align="right" width="12%">{{ planet.mines_metal_production|intcomma }}</td>
+									<td align="right" width="12%">{{ planet.mines_bonus_str }}%</td>
+									<td width="12%">{{ planet.total_metal_production|intcomma }}</td>
+								</tr>
+								
+								<tr>
+									<td>Cristal</td>
+									<td>{{ planet.roids_cristal|intcomma }}</td>
+									<td align="right">{{ planet.roids_cristal_production|intcomma }}</td>
+									<td align="right">{{ planet.roids_bonus_str }}%</td>
+									<td>{{ planet.mines_cristal }}</td>
+									<td align="right">{{ planet.mines_cristal_production|intcomma }}</td>
+									<td align="right">{{ planet.mines_bonus_str }}%</td>
+									<td>{{ planet.total_cristal_production|intcomma }}</td>
+								</tr>
+								<tr>
+									<td>Urânio</td>
+									<td>{{ planet.roids_uranium|intcomma }}</td>
+									<td align="right">{{ planet.roids_uranium_production|intcomma }}</td>
+									<td align="right">{{ planet.roids_bonus_str }}%</td>
+									<td>{{ planet.mines_uranium }}</td>
+									<td align="right">{{ planet.mines_uranium_production|intcomma }}</td>
+									<td align="right">{{ planet.mines_bonus_str }}%</td>
+									<td>{{ planet.total_uranium_production|intcomma }}</td>
+								</tr>
+								<tr>
+									<td>Ouro</td>
+									<td>{{ planet.roids_gold|intcomma }}</td>
+									<td align="right">{{ planet.roids_gold_production|intcomma }}</td>
+									<td align="right">{{ planet.roids_bonus_str }}%</td>
+									<td>{{ planet.mines_gold }}</td>
+									<td align="right">{{ planet.mines_gold_production|intcomma }}</td>
+									<td align="right">{{ planet.mines_bonus_str }} %</td>
+									<td>{{ planet.total_gold_production|intcomma }}</td>
+								</tr>
+							</tbody>
+			</table>
+	    </div>
+			 
+		<form action="{% url resources %}" method="post" class='form-horizontal well'>
+        
+        
+                <fieldset>
+                    <legend>Iniciar Asteróides</legend>
+                    
+                    
+					{% csrf_token %}
+					
+					<div class='control-group'>
+                    	<label class='control-label' for="metal">Metal</label>
+						<div class="controls">
+							<input type="text" id="metal" name="metal" class="sf"  placeholder='0'>
+						</div>
+                   </div>	
+                    
+					<div class='control-group'>
+                    	<label class='control-label' for="cristal">Cristal</label>
+						<div class="controls">
+							<input type="text" id="cristal" name="cristal" class="sf"  placeholder='0'>
+						</div>
+                   </div>	
+				   
+				   	<div class='control-group'>
+                    	<label class='control-label' for="uranium">Urânio</label>
+						<div class="controls">
+							<input type="text" id="uranium" name="uranium" class="sf"  placeholder='0'>
+						</div>
+                   </div>	
+				   
+				   	
+					<div class='control-group'>
+                    	<label class='control-label' for="gold">Ouro</label>
+						<div class="controls">
+							<input type="text" id="gold" name="gold" class="sf"  placeholder='0'>
+						</div>
+                   </div>	
+				                                       
+                   
+                   <div class='control-group'>
+						<div class='controls'>
+							<button type='submit' class='btn btn-primary'>Iniciar Asteróides</button>
+						</div>
+					</div>                   
+                </fieldset>
+            
+            
+        
+        </form>
+		
+		
+		 <form action="{% url resources %}" method="post" class='well'>
+				{% csrf_token %}
+				<fieldset>
+					<legend>Converter Recursos</legend>
+						<p>Através de processos químicos nossos cientistas são capazes de converter um recurso em outro. Atualmente para cada 1 unidade do recurso selecionado é possível obter {{ planet.convert_rate }} unidades de algum outro recurso.</p>
+					
+						{{ convertion.as_p }}
+					
+						
+							<button type='submit' class='btn btn-primary'>Converter</button>
+						
+				</fieldset>
+		 </form>
+	
+       
+{% endblock %}	

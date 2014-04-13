@@ -1,0 +1,210 @@
+{% load humanize %}{% spaceless %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<title>MultiPLA - {% block title %}Geral{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	
+	<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet"/>
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">MultiPLA</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">{{ planet.ruler }} de {{ planet.name }} ({{ planet.coords }})<p>
+            <ul class="nav">
+              <li class="active"><a href="#">Principal</a></li>
+              <li><a href="#about">Fórum</a></li>
+              <li><a href="#contact">Suporte</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+			
+              <li class="nav-header">Principal</li>
+			  <li {% if overview %}class='active'{% endif %}>	 <a href="{% url overview %}">	<i class="icon-home icon{% if overview %}-white{% endif %}"></i> 	Visão Geral</a></li>
+			  <li {% if messagesp %}class='active'{% endif %}>	<a href="{% url messages %}">	<i class="icon-inbox icon{% if messagesp %}-white{% endif %}"></i> 	Mensagens</a></li>
+			  <li {% if news %}class='active'{% endif %}>		<a href="{% url news %}"> <i class="icon-picture icon{% if news %}-white{% endif %}"></i>			Notícias</a></li>
+			  
+			  <li class="nav-header">Planeta</li>
+  			  <li {% if resources %}class='active'{% endif %}>	 <a href="{% url resources %}">	<i class="icon-tint icon{% if resources %}-white{% endif %}"></i>	Recursos</a></li>
+			  <li {% if research %}class='active'{% endif %}>	 <a href="{% url research %}">	<i class="icon-search icon{% if research%}-white{% endif %}"></i> 	Pesquisas</a></li>
+			  <li {% if build %}class='active'{% endif %}>		 <a href="{% url build %}"> 	<i class="icon-road icon{% if build %}-white{% endif %}"></i>	Construções</a></li>
+			  <li {% if production %}class='active'{% endif %}>	<a href="{% url production %}">	<i class="icon-wrench icon{% if production %}-white{% endif %}"></i> 	Produção</a></li>
+			  
+			  <li class="nav-header">Política</li>
+			  <li {% if forump %}class='active'{% endif %}>	<a href="{% url messages %}">	<i class="icon-list-alt icon{% if forump %}-white{% endif %}"></i>	Fórum</a></li>
+			  <li {% if votingp %}class='active'{% endif %}>	<a href="{% url messages %}">	<i class="icon-barcode icon{% if votingp %}-white{% endif %}"></i>	Votação</a></li>
+			  <li {% if traffic %}class='active'{% endif %}>	<a href="{% url traffic %}">	<i class="icon-adjust icon{% if traffic %}-white{% endif %}"></i> 	Tráfego da Galáxia</a></li>
+			  <li {% if gal %}class='active'{% endif %}>		<a href="{% url galaxy planet.x planet.y %}">	<i class="icon-cog icon{% if gal %}-white{% endif %}"></i>		Galáxia</a></li>
+			  
+			  <li class="nav-header">Militar</li>
+			  <li {% if military %}class='active'{% endif %}>	<a href="{% url military %}"> 	<i class="icon-retweet icon{% if military %}-white{% endif %}"></i>	Frotas</a></li>
+			  <li {% if missions %}class='active'{% endif %}>	<a href="{% url missions %}">	<i class="icon-screenshot icon{% if missions %}-white{% endif %}"></i>	Missões</a></li>
+			  <li {% if sabotage %}class='active'{% endif %}>	<a href="{% url sabotage %}">	<i class="icon-eye-close icon{% if sabotage %}-white{% endif %}"></i>	Sabotagem</a></li>
+			  <li {% if spy %}class='active'{% endif %}>		<a href="{% url spy %}">		<i class="icon-briefcase icon{% if spy %}-white{% endif %}"></i> Espionagem</a></li>
+			  
+			  <li class="nav-header">Universo</li>
+			  <li {% if ranking %}class='active'{% endif %}>	<a href="{% url ranking %}">	<i class="icon-th icon{% if ranking %}-white{% endif %}"></i> Ranking</a></li>
+			  <li {% if gal_ranking %}class='active'{% endif %}>	<a href="{% url gal_ranking %}"><i class="icon-th-list icon{% if gal_ranking %}-white{% endif %}"></i> Ranking das Galáxias</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+		
+        <div class="span10">
+		
+			<div class="row-fluid">
+				
+					<div class='span2'>
+						<p style='text-align: center;'><i class="icon-magnet"></i>  Metal
+							<small>{{ planet.metal|intcomma }}</small>
+						</p>
+					</div>
+					
+					<div class='span2'>
+						<p style='text-align: center;'><i class="icon-adjust"></i> Cristal
+							<small>{{ planet.cristal|intcomma }}</small>
+						</p>
+					</div>
+					
+					<div class='span2'>
+						<p style='text-align: center;'><i class="icon-tint"></i> Urânio
+							<small>{{ planet.uranium|intcomma }}</small>
+						</p>
+					</div>
+					
+					<div class='span2'>
+						<p style='text-align: center;'><i class="icon-gift"></i> Ouro
+							<small>{{ planet.gold|intcomma }}</small>
+						</p>
+					</div>
+				
+					<div class='span2'>
+						<p style='text-align: center;'><i class="icon-bookmark"></i> Pontuação
+							<small>{{ planet.score|intcomma }}</small>
+						</p>
+					</div>
+				
+			</div>
+	
+				<div class='row-fluid'>
+					<div class='span2'>
+						<a href="{% url messages %}" class="btn btn-mini btn-block {% if planet.unread_messages %}btn-warning{% else %}{% endif %}">
+						<i class="icon-inbox {% if planet.unread_messages %}icon-white{% endif %}"></i>
+						 Mensagens<br/>
+						  <small>{{ planet.unread_messages }}</small></a>
+					</div>
+					
+					<div class='span2'>
+						<a href="{% url news %}" class="btn btn-mini btn-block {% if planet.unread_news %}btn-warning{% else %}{% endif %}">
+						<i class="icon-picture  {% if planet.unread_news %}icon-white{% endif %}"></i>
+						 Notícias<br/>
+						  <small>{{ planet.unread_news }}</small></a>
+					</div>
+
+					<div class='span2'>
+						<a href="{% url overview %}" class='btn btn-mini btn-block {% if not planet.get_allied_ships %}disabled {% else %} btn-success {% endif %} '><i class="icon-ok-sign {% if planet.allied_ships %}icon-white{% endif %}"></i>
+						 Aliados<br/>
+						  <small>{{ planet.allied_ships|intcomma }}</small></a>
+						
+					</div>
+					
+					<div class='span2'>
+						<a href="{% url overview %}" class='btn btn-mini btn-block {% if not planet.get_enemy_ships %}disabled {% else %}btn-danger {% endif %}'><i class="icon-exclamation-sign {% if planet.enemy_ships %}icon-white{% endif %}"></i>
+						 Inimigos<br/>
+						  <small>{{ planet.enemy_ships|intcomma }}</small></a>
+					</div>
+					
+					<div class='span2'>
+						<a href="{% url traffic %}" class='btn btn-mini btn-block {% if not planet.galaxy.get_enemy_ships %}disabled {% else %}btn-warning {% endif %}'><i class="icon-globe {% if galaxy.get_enemy_ships %}icon-white{% endif %}"></i>
+						 Galáxia<br/>
+						 <small>{% if planet.galaxy.get_enemy_ships %}Sob Ataque{% else %}Normal{% endif %}</small>
+						</a>
+					</div>
+					
+				</div>	
+
+				
+
+			
+		<br/>
+		{% block breadcrumbs %}{% endblock %}
+		
+		{% block messages %}
+			{% if messages %}
+				{% for message in messages %}
+					<div class="alert fade in">
+								<a class="close" data-dismissal="alert" href="#">&times;</a>
+								{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endblock %}
+		
+		{% block content %}{% endblock %}
+		
+		</div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2012. Multip.la é um produto Halts & Cia. Todos os direitos reservados.</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<script>
+		$(".alert").alert()
+	</script>
+
+  </body>
+</html>
+{% endspaceless %}

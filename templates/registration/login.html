@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>MultiPLA - Login</title>
+	<link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
+	<!--[if IE 9]>
+		<link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/ie9.css"/>
+	<![endif]-->
+
+	<!--[if IE 8]>
+		<link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/ie8.css"/>
+	<![endif]-->
+
+	<!--[if IE 7]>
+		<link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/ie7.css"/>
+	<![endif]-->
+	<script language="javascript" type="text/javascript"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/custom/general.js"></script>
+</head>
+
+<body>
+
+	<div class="loginlogo" style='text-align: center;'>
+		<!--img src="{{ STATIC_URL }}images/logo2.png" alt="Logo"-->
+		<br/>
+		<span style='color: white; font-size: 40pt; font-weight: bold;'>MultiPLA</span>
+	</div><!--loginlogo-->
+
+	{% if form.errors %}
+		<div class="notification notifyError loginNotify">Usuário ou senha inválida.</div>
+	{% endif %}
+	
+		<form id="loginform" action="{% url login %}" method="post">
+			<div class="loginbox">
+				<div class="loginbox_inner">
+					<div class="loginbox_content">
+						{% csrf_token %}
+						<input type="text" name="username" class="username" style="background-position: 0px 0px; ">
+						<input type="password" name="password" class="password" style="background-position: 0px 0px; ">
+						<input type="hidden" name="next" value="{{ next }}" />
+						<button name="submit" type='submit' class="submit">Login</button>
+						
+					</div><!--loginbox_content-->
+				</div><!--loginbox_inner-->
+			</div><!--loginbox-->
+
+			<div class="loginoption">
+				<a href='{% url signup %}'>Cadastrar?</a>
+				
+			</div><!--loginoption-->
+		</form>
+
+Resets serao realizados ao longo dos proximos dias.
+	</body>
+</html>

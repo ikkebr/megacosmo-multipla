@@ -1,0 +1,17 @@
+{% load humanize %}
+<div class="wave">
+				<h3>Análise de Unidades - {{ target }}</h3>
+
+				<table class='table table-bordered'>
+					
+					<tbody>
+						{% for each in target.get_ships %}
+							<tr class="{% cycle 'odd' 'even' %}">
+								<td>{{ each.ship.name }}</td>
+								<!--td>{{ each.ship.get_class_as_str }}</td-->
+								<td>{{ each.quantity }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+</div><!--wave-->

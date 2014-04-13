@@ -1,0 +1,42 @@
+{% load humanize %}
+<div class="wave">
+				
+					<h3>Onda Militar de {{ target }}</h3>
+				
+				<table class='table table-bordered'>
+				
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Classe</th>
+							<th>Alvo</th>
+							<th>Tipo</th>
+							<th>Base</th>
+							<th>Frota 1{% if fleet1.moving %}<br/>{{ fleet1.get_action }}{% endif %}</th>
+							<th>Frota 2{% if fleet2.moving %}<br/>{{ fleet2.get_action }}{% endif %}</th>
+							<th>Frota 3{% if fleet3.moving %}<br/>{{ fleet3.get_action }}{% endif %}</th>
+						</tr>
+					</thead>
+			
+					<tbody>
+
+						
+						{% for each in stock %}
+						<tr>
+							<td>{{ each.ship.name }}</td>
+							<td>{{ each.ship.get_class_as_str }}</td>
+							<td>{{ each.ship.get_target_as_str }}</td>
+							<td>{{ each.ship.get_skill_as_str }}</td>
+							
+							<td>{{ each.get_in_base }}</td>
+							<td>{{ each.get_in_fleet1 }}</td>
+							<td>{{ each.get_in_fleet2 }}</td>
+							<td>{{ each.get_in_fleet3 }}</td>
+
+						</tr>
+						{% endfor %}
+					
+						
+					</tbody>
+				</table>
+</div><!--wave-->

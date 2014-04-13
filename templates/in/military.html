@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Frotas{% endblock %}
+
+{% block frotas %}class="current"{% endblock %}
+{% block geral %}{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Frotas</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}		
+    	<h1>Naves</h1>
+				
+				
+				<p class='lead'>Você pode mover suas naves entre a Base e cada uma das três frotas do seu planeta.</p>
+				
+				{% if stock %}
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Classe</th>
+							<th>Alvo</th>
+							<th>Tipo</th>
+							<th>Base</th>
+							<th>Frota 1{% if fleet1.moving %}<br/>em deslocamento{% endif %}</th>
+							<th>Frota 2{% if fleet2.moving %}<br/>em deslocamento{% endif %}</th>
+							<th>Frota 3{% if fleet3.moving %}<br/>em deslocamento{% endif %}</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						
+						{% for each in stock %}
+						<tr>
+							<td>{{ each.ship.name }}</td>
+							<td>{{ each.ship.get_class_as_str }}</td>
+							<td>{{ each.ship.get_target_as_str }}</td>
+							<td>{{ each.ship.get_skill_as_str }}</td>
+							
+							<td>{{ each.get_in_base }}</td>
+							<td>{{ each.get_in_fleet1 }}</td>
+							<td>{{ each.get_in_fleet2 }}</td>
+							<td>{{ each.get_in_fleet3 }}</td>
+
+						</tr>
+						{% endfor %}
+					
+						
+					</tbody>
+				</table>
+		
+	
+		<h3>Mover</h3>
+		
+		
+		<table class='table table-striped'>
+			
+			<thead>
+				<tr>
+					<th>Nave</th>
+					<th>Quantidade</th>
+					<th>Origem</th>
+					<th>Destino</th>
+				</tr>
+			</thead>
+	
+				<tbody>
+
+				<form action='{% url military %}' method='post'>
+				{% csrf_token %}
+				{% for i in 012345|make_list %}
+				<tr>
+					<td>
+						<select class='input-medium' name='ship-{{forloop.counter}}'>
+							<option value=''></option>
+							<option value='99'>Todas as Naves</option>
+							<option value='98'>Todos os Caças</option>
+							<option value='97'>Todas as Corvetas</option>
+							<option value='96'>Todas as Fragatas</option>
+							<option value='95'>Todas os Cruzadores</option>
+							<option value='94'>Todas as Naves-Mãe</option>
+							{% for each in stock %}
+								<option value='{{ each.ship.id }}'>{{ each.ship.name }}</option>
+							{% endfor %}
+						</select>
+					</td>
+					
+					<td><input min='0' placeholder='0' class='input-mini' type='number' name='qt-{{forloop.counter}}' /></td>
+					<td>
+						<select class='input-medium' name='from-{{forloop.counter}}'>
+							<option value=''></option>
+							<option value='{{ base.id }}'>Base</option>
+							{% if not fleet1.moving %}<option value='{{ fleet1.id }}'>Frota 1</option>{% endif %}
+							{% if not fleet2.moving %}<option value='{{ fleet2.id }}'>Frota 2</option>{% endif %}
+							{% if not fleet3.moving %}<option value='{{ fleet3.id }}'>Frota 3</option>{% endif %}
+						</select>
+					</td>
+					
+					<td>
+						<select class='input-medium' name='to-{{forloop.counter}}'>
+							<option value=''></option>
+							<option value='{{ base.id }}'>Base</option>
+							{% if not fleet1.moving %}<option value='{{ fleet1.id }}'>Frota 1</option>{% endif %}
+							{% if not fleet2.moving %}<option value='{{ fleet2.id }}'>Frota 2</option>{% endif %}
+							{% if not fleet3.moving %}<option value='{{ fleet3.id }}'>Frota 3</option>{% endif %}
+						</select>
+					</td>
+				</tr>
+				{% endfor %}
+				
+					<tr>
+						<td colspan='4' align='center' class='form_default'><button type='submit' class='btn btn-primary'>Mover</button></td>
+					</tr>
+				</form>
+			</tbody>
+		</table>
+	{% else %}
+		<p>Você não tem nenhuma nave.</p>
+	{% endif %}
+	
+{% endblock %}	

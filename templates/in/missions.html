@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Missões{% endblock %}
+
+{% block frotas %}class="current"{% endblock %}
+{% block geral %}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Missões</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+
+{% block content %}
+    	<h1>Naves</h1>
+		<p class='lead'>Você pode dar ordens para suas frotas.</p>
+		{% if stock %}
+				<p class='lead'>Suas frotas estão divididas da seguinte maneira:</p>
+				
+				
+				<table class='table table-striped'>
+					
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Classe</th>
+							<th>Alvo</th>
+							<th>Tipo</th>
+							<th>Base</th>
+							<th>Frota 1{% if fleet1.moving %}<br/>{{ fleet1.get_action }}{% endif %}</th>
+							<th>Frota 2{% if fleet2.moving %}<br/>{{ fleet2.get_action }}{% endif %}</th>
+							<th>Frota 3{% if fleet3.moving %}<br/>{{ fleet3.get_action }}{% endif %}</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+
+						
+						{% for each in stock %}
+						<tr>
+							<td>{{ each.ship.name }}</td>
+							<td>{{ each.ship.get_class_as_str }}</td>
+							<td>{{ each.ship.get_target_as_str }}</td>
+							<td>{{ each.ship.get_skill_as_str }}</td>
+							
+							<td>{{ each.get_in_base }}</td>
+							<td>{{ each.get_in_fleet1 }}</td>
+							<td>{{ each.get_in_fleet2 }}</td>
+							<td>{{ each.get_in_fleet3 }}</td>
+
+						</tr>
+						{% endfor %}
+					
+						
+					</tbody>
+				</table>
+			
+		
+		
+	
+		<h3>Missões</h3>
+		
+		<table class='table table-striped'>
+			
+			<thead>
+				<tr>
+					<th>Frota</th>
+					<th>Status</th>
+					<th>Ação</th>
+				</tr>
+			</thead>
+			
+				<tbody>
+
+				<form action='{% url missions %}' method='post'>
+					{% csrf_token %}
+					<tr>
+						<td>Base</td>
+						<td>Ativo</td>
+						<td>Defender</td>
+					</tr>
+					
+					<tr>
+						<td>Frota 1</td>
+						<td>{{ fleet1.get_action }}{% if fleet1.eta %}  -  {{ fleet1.eta }} tick{{fleet1.eta|pluralize}} até o destino.{% endif %}</td>
+						
+						
+						<td class='form_default'>
+						{% if not fleet1.moving %}
+							<select class='input-medium' name="fleet-1">
+								<option></option>
+								<option value='1'>Atacar 1 Tick</option>
+								<option value='2'>Atacar 2 Ticks</option>
+								<option value='3'>Atacar 3 Ticks</option>
+								<option></option>
+								<option value='4'>Defender 1 Tick</option>
+								<option value='5'>Defender 2 Ticks</option>
+								<option value='6'>Defender 3 Ticks</option>
+								<option value='7'>Defender 4 Ticks</option>
+							</select>
+							
+							<input type="text" name="x-1" class="input-mini"  placeholder='X'>:<input type="text" name="y-1" class="input-mini"  placeholder='Y'>:<input type="text" name="z-1" class="input-mini"  placeholder='Z'>
+							
+							<!--select class='qf' name="when-1">
+								<option></option>
+								<option value='1'>Agora</option>
+								<option value='2'>Em 1 Turno</option>
+								<option value='3'>Em 2 Turnos</option>
+								<option value='4'>Em 3 Turnos</option>
+								<option value='5'>Em 4 Turnos</option>
+								<option value='6'>Em 5 Turnos</option>
+								<option value='7'>Em 6 Turnos</option>
+							</select-->
+							
+							Ao custo de {{ fleet1.cost|intcomma }} unidades de Urânio
+						{% else %}
+							<select class='input-small' name='fleet-1'>
+								<option></option>
+								<option value='10'>Recuar</option>
+							</select>
+						{% endif %}
+						</td>
+					</tr>
+					
+				
+				
+					<tr>
+						<td>Frota 2</td>
+						<td>{{ fleet2.get_action }}{% if fleet2.eta %}  -  {{ fleet2.eta }} tick{{fleet2.eta|pluralize}} até o destino.{% endif %}</td>
+						
+						
+						<td class='form_default'>
+						{% if not fleet2.moving %}
+							<select class='input-medium' name="fleet-2">
+								<option></option>
+								<option value='1'>Atacar 1 Tick</option>
+								<option value='2'>Atacar 2 Ticks</option>
+								<option value='3'>Atacar 3 Ticks</option>
+								<option></option>
+								<option value='4'>Defender 1 Tick</option>
+								<option value='5'>Defender 2 Ticks</option>
+								<option value='6'>Defender 3 Ticks</option>
+								<option value='7'>Defender 4 Ticks</option>
+							</select>
+							
+							<input type="text" name="x-2" class="input-mini" placeholder='X'>:<input type="text" name="y-2" class="input-mini" placeholder='Y'>:<input type="text" name="z-2" class="input-mini" placeholder='Z'>
+							
+							<!--select class='qf' name="when-2">
+								<option></option>
+								<option value='1'>Agora</option>
+								<option value='2'>Em 1 Turno</option>
+								<option value='3'>Em 2 Turnos</option>
+								<option value='4'>Em 3 Turnos</option>
+								<option value='5'>Em 4 Turnos</option>
+								<option value='6'>Em 5 Turnos</option>
+								<option value='7'>Em 6 Turnos</option>
+							</select-->
+							
+							Ao custo de {{ fleet2.cost|intcomma }} unidades de Urânio
+						{% else %}
+							<select class='input-small' name='fleet-2'>
+								<option></option>
+								<option value='10'>Recuar</option>
+							</select>
+						{% endif %}
+						</td>
+					</tr>
+
+
+					<tr>
+						<td>Frota 3</td>
+						<td>{{ fleet3.get_action }}{% if fleet3.eta %}  -  {{ fleet3.eta }} tick{{fleet3.eta|pluralize}} até o destino.{% endif %}</td>
+						
+						
+						<td class='form_default'>
+						{% if not fleet3.moving %}
+							<select class='input-medium' name="fleet-3">
+								<option></option>
+								<option value='1'>Atacar 1 Tick</option>
+								<option value='2'>Atacar 2 Ticks</option>
+								<option value='3'>Atacar 3 Ticks</option>
+								<option></option>
+								<option value='4'>Defender 1 Tick</option>
+								<option value='5'>Defender 2 Ticks</option>
+								<option value='6'>Defender 3 Ticks</option>
+								<option value='7'>Defender 4 Ticks</option>
+							</select>
+							
+							<input type="text" name="x-3" class="input-mini" placeholder='X'>:<input type="text" name="y-3" class="input-mini"  placeholder='Y'>:<input type="text" name="z-3" class="input-mini"  placeholder='Z'>
+							
+							<!--select class='qf' name="when-3">
+								<option></option>
+								<option value='1'>Agora</option>
+								<option value='2'>Em 1 Turno</option>
+								<option value='3'>Em 2 Turnos</option>
+								<option value='4'>Em 3 Turnos</option>
+								<option value='5'>Em 4 Turnos</option>
+								<option value='6'>Em 5 Turnos</option>
+								<option value='7'>Em 6 Turnos</option>
+							</select-->
+							
+							Ao custo de {{ fleet3.cost|intcomma }} unidades de Urânio
+						{% else %}
+							<select class='input-small' name='fleet-3'>
+								<option></option>
+								<option value='10'>Recuar</option>
+							</select>
+						{% endif %}
+						</td>
+					</tr>					
+				
+					<tr>
+						<td colspan='4' align='center'>
+							<button type='submit' class='btn btn-primary'>Ordenar</button>
+						</td>
+					</tr>
+				</form>
+			</tbody>
+		</table>
+		{% else %}
+			<p>Você não tem nenhuma nave. </p>
+		{% endif %} <!-- fim de estoque -->
+{% endblock %}	

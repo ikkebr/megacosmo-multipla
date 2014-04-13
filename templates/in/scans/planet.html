@@ -1,0 +1,88 @@
+{% load humanize %}
+<div class="wave">
+				
+				<h3>Análise Atmosférica - {{ target }}</h3>
+				
+				<table class='table table-bordered'>
+						<tbody>
+						
+						<tr>
+							<td>Líder</td>
+							<td>{{ target.ruler }}</td>
+						</tr>				
+
+						<tr>
+							<td>Planeta</td>
+							<td>{{ target.name }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Score</td>
+							<td>{{ target.score|intcomma }}</td>
+						</tr>
+
+						<tr>
+							<td>Segurança</td>
+							<td>{{ target.get_awareness|intcomma }}</td>
+						</tr>							
+						
+						<tr>
+							<td>Raça</td>
+							<td>{{ target.get_race }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Metal</td>
+							<td>{{ target.metal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Cristal</td>
+							<td>{{ target.cristal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Urânio</td>
+							<td>{{ target.uranium|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Ouro</td>
+							<td>{{ target.gold|intcomma }}</td>
+						</tr>
+						
+						
+						<tr>
+							<td>Construções</td>
+							<td>{{ target.buildings }}</td>
+						</tr>	
+						
+						<tr>
+							<td>Asteróides de Metal</td>
+							<td>{{ target.roids_metal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Asteróides de Cristal</td>
+							<td>{{ target.roids_cristal|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Asteróides de Urânio</td>
+							<td>{{ target.roids_uranium|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Asteróides de Ouro</td>
+							<td>{{ target.roids_gold|intcomma }}</td>
+						</tr>
+						
+						<tr>
+							<td>Naves</td>
+							<td>{{ target.get_ship_count|intcomma }}</td>
+						</tr>
+						
+
+					</tbody>
+				</table>
+</div><!--wave-->

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Pesquisas{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Pesquisas</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}		
+	
+	<div class='well'>
+    	<h1>Pesquisas</h1>
+				
+		{% for description, level in current_researches %}
+			{% if forloop.first %}
+				<!--PESQUISAS-->
+			{% else %}
+				<h2>{{ description|first }} - Nível Atual: {{ level }}</h2>	            
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th align='center'>Pesquisa</th>
+							<th align='center'>Descrição</th>
+							<th align='center'>Ação</th>
+						</tr>
+					</thead>
+
+					<tbody>
+				{% for name, rlist in description|last %}
+						<tr>
+							<td>{{ name }}</td>
+							<td>{{ rlist }}</td>
+							<td align='center'>{% if level >= forloop.counter %} 
+									<span style='color: green;'>Completada </span>
+								{% elif level == forloop.counter0 and planet.can_research %} 
+									<a href='{% url init_research forloop.parentloop.counter0 %}' class='btn btn-primary'> Pesquisar </a>
+								{% elif level == forloop.counter0 and planet.current_research == forloop.parentloop.counter0 %}
+									{{ planet.current_research_time }} hora{{ planet.current_research_time|pluralize }} faltando. <br/>
+									<a href='{% url cancel_research %}' class='btn btn-danger'>
+										Cancelar
+									</a>
+								{% elif level == forloop.counter0 %}
+									Outra pesquisa em andamento.
+								{% endif %}</td>
+						</tr>
+				 {% endfor %}
+					</tbody>
+				</table>
+			
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}	

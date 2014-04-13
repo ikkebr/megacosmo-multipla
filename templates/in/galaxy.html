@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Galáxia {{ galaxy.x }}:{{ galaxy.y }}{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Galáxia</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+
+	<div class='well'>
+        <h1>{{ galaxy.x }}:{{ galaxy.y }} - {{ galaxy.name }}</h1>
+       
+			<form style='margin: 0 auto; width: 20%; text-align: center; margin-bottom: 10px;' action="{% url galaxy 1 1 %}" method="post">
+				{% csrf_token %}
+				<p>
+					<input type='number' class='input-mini' value='{{ galaxy.x }}' name='x' min="1" max="10" />:<input type='number' name='y' class='input-mini' value='{{ galaxy.y }}' min="1" max="10" />
+				</p>
+				
+				<div class="btn-group">
+					
+					<button type='submit' class='btn btn-primary' name='prev'> < </button>
+					<button type='submit' class='btn btn-primary' name='go'>Visitar Galáxia</button>
+					<button type='submit' class='btn btn-primary' name='next'> > </button>
+					
+				</div>
+				
+				<br/>
+				
+				<img src='x.png' height='400' width='400' class='img-circle' style='margin: 0 auto;' />
+			</form>
+		
+		
+        
+		
+        <h4>Pontuação: {{ galaxy.score }} | Asteróides: {{ galaxy.roids }} | Ranking: {{ galaxy.ranking }}</h4>	            
+        
+		
+        <table class='table table-bordered table-striped'>
+   
+            <thead>
+			<tr>
+                <th>#</th>
+                <th>Governante</th>
+                <th>Planeta</th>
+                <th>Asteróides</th>
+                <th>Pontuação</th>
+                <th>Raça</th>
+            </tr>
+			</thead>
+			
+       
+                <tbody>
+				{% for z, gplanet in galaxy.get_planet_list %}
+				<tr>
+                    <td align='center'>{{z}}</td>
+                    <td>{{ gplanet.ruler }}</td>
+                    <td>{{ gplanet.name }}</td>
+                    <td align="right">{{ gplanet.roids|intcomma }}</td>
+                    <td align="right">{{ gplanet.score|intcomma|intword }}</td>
+                    <td>{{ gplanet.get_race }}</td>
+                </tr>
+				{% endfor %}
+            </tbody>
+			
+		</table>
+	</div>
+{% endblock %}	

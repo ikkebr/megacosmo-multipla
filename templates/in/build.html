@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Construções{% endblock %}
+
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Construções</li>
+    </ul><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+
+		<div class='well'>
+    	<h1>Construções</h1>
+							
+				<p class='lead'>Custo da Próxima Construção: {{ planet.building_cost }} unidades de cada recurso. Nós já construímos {{ planet.buildings}} prédio{{ planet.buildings|pluralize}} e ainda podemos construir {{ planet.available_buildings }} prédio{{ planet.available_buildings|pluralize }}.</p>
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th align='center'>Nome</th>
+							<th align='center'>Descrição</th>
+							<th align='center'>Quantidade</th>
+							<th align='center'>Ação</th>
+						</tr>
+					</thead>
+
+						<tbody>
+						
+						
+		{% for description, level in current_builds %}
+		
+
+			{% if forloop.first %}
+				<!--PESQUISAS-->
+			{% else %}
+						
+				
+				
+						<tr>
+							<td>{{ description|first }}</td>
+							<td>{{ description|last|first }}</td>
+							<td align='center'>{{ level }}</td>
+							<td align='center'>
+							{% if planet.current_building == forloop.counter0 %}
+								{{ planet.current_building_time }} hora{{ planet.current_building_time|pluralize }} faltando. <br/>
+								<a class='btn btn-danger' href='{% url cancel_build %}'>Cancelar construção</a>
+							{% elif planet.current_building != 0 %}
+								Outra construção em andamento.
+							{% else %}
+								<a class='btn btn-primary' href='{% url init_build forloop.counter0 %}'>Construir</a>
+							{% endif %}
+							</td>
+						</tr>
+				
+					
+			{% endif %}
+			
+		{% endfor %}
+					</tbody>
+				</table>
+				
+		</div>
+{% endblock %}	

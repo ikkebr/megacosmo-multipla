@@ -1,0 +1,49 @@
+{% load humanize %}
+<table>
+	<!--thead>
+		<th style='width: 5%;'>Nome</th>
+		<th style='width: 10%;'>Classe</th>
+		<th style='width: 10%;'>Iniciativa</th>
+		<th style='width: 10%;'>Ataque</th>
+		<th style='width: 10%;'>Defesa</th>
+		<th style='width: 10%;'>Alvo</th>
+		<th style='width: 10%;'>Metal</th>
+		<th style='width: 10%;'>Cristal</th>
+		<th style='width: 10%;'>Ouro</th>
+		<th style='width: 10%;'>Habilidade</th>
+		<th style='width: 5%;'>Raça</th>
+	</thead-->
+	
+	<tbody>
+		{% for ship in ships %}
+			{% ifchanged ship.get_race_as_str %}
+				<tr>
+							<th style='width: 5%;'>Nome</th>
+							<th style='width: 10%;'>Classe</th>
+							<th style='width: 10%;'>Alvo</th>
+							<th style='width: 10%;'>Iniciativa</th>
+							<th style='width: 10%;'>Ataque</th>
+							<th style='width: 10%;'>Defesa</th>
+							<th style='width: 10%;'>Metal</th>
+							<th style='width: 10%;'>Cristal</th>
+							<th style='width: 10%;'>Ouro</th>
+							<th style='width: 10%;'>Habilidade</th>
+							<th style='width: 5%;'>Raça</th>
+				</tr>
+			{% endifchanged %}
+			<tr style='background-color:{% cycle "#babaca" "#fff" %};'>
+				<td>{{ ship.name }}</td>
+				<td style='text-align: center;'>{{ ship.get_class_as_str }}</td>
+				<td style='text-align: center;'>{{ ship.get_target_as_str }}</td>
+				<td style='text-align: center;'>{{ ship.init }}</td>
+				<td style='text-align: center;'>{{ ship.attack }}</td>
+				<td style='text-align: center;'>{{ ship.defense }}</td>
+				<td style='text-align: center;'>{{ ship.cost_metal|intcomma }}</td>
+				<td style='text-align: center;'>{{ ship.cost_cristal|intcomma }}</td>
+				<td style='text-align: center;'>{{ ship.cost_gold|intcomma }}</td>
+				<td style='text-align: center;'>{{ ship.get_skill_as_str }}</td>
+				<td style='text-align: center;'>{{ ship.get_race_as_str }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

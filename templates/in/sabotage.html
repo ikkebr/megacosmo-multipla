@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Sabotagem{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Sabotagem</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+	
+	<div class='well'>
+    	<h1>Sabotagem</h1>
+				
+			<p class='lead'>Você pode realizar sabotagens nos outros planetas. Nosso nível de segurança é {{ planet.get_awareness }}.</p>
+
+				<table class="table table-striped">
+				
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Descrição</th>
+							<th>Metal</th>
+							<th>Cristal</th>
+							<th>Ouro</th>
+							<th>Coords</th>
+						</tr>
+					</thead>
+			
+					<tbody>
+						
+						{% for desc, cost in current_sabotages %}
+							{% if forloop.counter0 != 0 and forloop.counter0 != 1 %}
+							<tr>
+								<td>{{ desc.0 }}</td>
+								<td>{{ desc.1 }}</td>
+								<td>{{ cost }}</td>
+								<td>{{ cost }}</td>
+								<td>{{ cost }}</td>
+								
+
+								<td>
+									{% if planet.research_sabotage >= forloop.counter0 %}
+										<form action="{% url sabotage %}" method="post">
+											{% csrf_token %}
+											<input class='input-mini' placeholder='0' min="0" type='number' name='x' />:
+											<input class='input-mini' placeholder='0' min="0" type='number' name='y' />:
+											<input class='input-mini' placeholder='0' min="0" type='number' name='z' />
+											<input type='hidden' name='sabotage' value='{{ forloop.counter0 }}'/>
+											<button type='submit' class='btn btn-primary'>Enviar</button>
+										</form>
+									{% else %}
+										Pesquisa Necessária
+									{% endif %}
+								</td>
+							</tr>
+							{% endif %}
+						{% endfor %}
+												
+					</tbody>
+				</table>
+	</div>
+{% endblock %}	

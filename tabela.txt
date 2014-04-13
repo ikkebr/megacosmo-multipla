@@ -1,0 +1,144 @@
+12 naves
+
+
+Anti Terran - 	Fi / Bs
+Terrano - Tec > Co Top | Fr 2nd
+	2 Roubo
+	2 EMP
+	2 Invís
+	
+	4 Normal
+	2 Coletoras
+Terran
+	Fi
+		1 Invis > CR
+		1 Emp > Fr
+		
+	Co
+		1 Normal > Co
+		1 Invis > Fr
+		1 Emp > Cr
+		1 Coletora
+		
+	Fr
+		1 Roubo > Co
+		1 Normal > Cr
+		1 Coletora
+		1 Normal > Fr
+	
+	Cr
+		1 Normal > Bs
+		
+	Bs
+		1 Normal > Fi
+		
+		
+Anti Ciclon -  	Fr / Cr
+Ciclôn - Roubo > Bs Top | Co 2nd
+	2 Normal
+	8 Roubo
+	2 Coletoras
+
+Ciclôn
+	Fi
+		1 Normal
+		1 Roubo
+		
+	Co
+		1 Normal
+		3 Roubo
+		1 Coletora
+		
+	Fr
+		1 Roubo
+		
+	Cr
+		1 Roubo
+	
+	Bs
+		2 Roubo
+		1 Coletora
+		
+
+Anti Xeno - 	Cr / Fr		
+Xenófago - Mime > Fi Top | Bs 2nd
+	10 Mime
+	2 Coletoras
+	
+Xenófago
+	Fi
+		3 Mime
+		1 coletora
+		
+	Co
+		1 Mime
+		
+	Fr
+		1 Mime
+		
+	Cr
+		2 Mime
+		
+	Bs
+		3 Mime
+		1 Coletora
+		
+
+Anti Qrog -  	Co / Fi
+Qrogano - Def > FR Top | Cr 2nd
+	10 Normal
+	2 Coletoras
+	
+Qrogano
+	Fi
+		1 Normal
+		
+	Co
+		2 Normal
+		
+	Fr
+		3 Normal
+		1 Coletora
+		
+	Cr
+		3 Normal
+		1 Coletora
+		
+	Bs
+		1 Normal
+		
+		
+
+Anti Mak	    Bs / Co
+Makulo - EMP > CR Top | Fi 2nd
+	2 Normal
+	2 Coletoras
+	8 EMP
+		
+Makulo
+	Fi
+		1 Normal
+		2 Emp
+		1 Coletora
+		
+	Co
+		2 Emp
+		
+	Fr
+		1 Emp
+		
+	Cr
+		2 Emp
+		1 Normal
+		1 Coletora
+		
+	Bs
+		1 Emp
+		
+		
+
+Fi 1
+Co 2
+Fr 4
+Cr 15
+BS 40

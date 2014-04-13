@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Notícias{% endblock %}
+
+{% block geral %}{% endblock %}
+{% block news %}class='current'{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Notícias</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+
+		<div class='well'>
+    	<h1>Notícias</h1>
+				
+			
+				
+				<table class='table table-striped table-bordered'>
+					
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>News</th>
+							<th>Descrição</th>
+							<th>Ação</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+						
+					{% if news_list %}
+						{% for news in news_list %}
+						
+
+									
+								
+								
+										<tr>
+											<td align='center'>{{ news.date|date:"H:i \<\b\r\/\> d/m/Y"|safe }}</td>
+											<td align='center'>{{ news.icon }}</td>
+											<td>{{ news.content|safe }}</td>
+											<td align='center'><a href='{% url remove_news news.id %}' class='btn btn-danger btn-block'>Remover</a>
+											
+												<a href='{% url publish_news news.id %}' class='btn btn-info btn-block'>
+													{% if not news.public %}
+														Publicar
+													{% else %}
+														Despublicar
+													{% endif %}
+												</a>
+											
+											<br/>
+											</td>
+										</td>
+						
+							
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan='4' align='center'>Não existem novidades.</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+
+    
+    <form class='form_default' action="{% url remove_all_news %}" method='post'>
+	{% csrf_token %}
+	<center><button class='btn btn-danger btn-large' type='submit'>Apagar todas as noticias</button></center>
+    </form>
+	</div>
+	
+{% endblock %}	

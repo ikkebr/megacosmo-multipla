@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Tráfego da Galáxia{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Tráfego da Galáxia</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+	
+	<div class='well'>
+		<h1>Tráfego da Galáxia</h1>
+		<p class='lead'>Você pode acompanhar as movimentações de frotas que estão chegando na sua galáxia.</p>
+		
+   
+		{% for each in galaxy.planet_set.all %}
+			<h5>{{ each }}</h5>
+			
+			<ul class='unstyled'>
+						{% for fleet in each.get_enemy_ships %}
+							<li>ETA: {{ fleet.eta }} - {{ fleet.planet }} - {{ fleet.get_ship_count }}</li>
+						{% endfor %}
+						
+						{% for fleet in  each.get_allied_ships %}
+							<li>ETA: {{ fleet.eta }} - {{ fleet.planet }} - {{ fleet.get_ship_count }}</li>
+						{% endfor %}
+			</ul>
+		{% endfor %}
+	
+	</div>
+	
+{% endblock %}	

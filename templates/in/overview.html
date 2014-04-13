@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Visão Geral{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li class='active'>Visão Geral</a></li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+
+{% block content %}
+	
+			{% if planet.unread_messages %}
+				<div class="alert alert-block alert-info fade in">
+					<a class="close" data-dismissal="alert" href="#">&times;</a>
+					Existe{% if planet.unread_messages > 1 %}m{% endif %} {{ planet.unread_messages }} mensagem{{ planet.unread_messages|pluralize }} que merece{% if planet.unread_messages > 1 %}m{% endif %} sua atenção. <a href="{% url messages %}">Clique aqui para lê-la{{ planet.unread_messages|pluralize }}.</a>
+				</div><!-- notification info -->
+			{% endif %}
+        
+			{% if planet.unread_news %}
+				<div class="alert alert-block alert-info fade in">
+					<a class="close" data-dismissal="alert" href="#">&times;</a>
+					Existe{% if planet.unread_news > 1 %}m{% endif %} {{ planet.unread_news }} notícia{{ planet.unread_news|pluralize }} que merece{% if planet.unread_news > 1 %}m{% endif %} sua atenção. <a href="{% url news %}">Clique aqui para vê-la{{ planet.unread_news|pluralize }}.</a>
+				</div><!-- notification info -->
+			{% endif %}
+			
+            
+            <div class="clear"></div>
+			
+			{% if planet.get_enemy_ships %}
+
+					<h3 style='background-color: red;'><span>Frotas Hostis vindo em direção ao seu planeta</span></h3>
+					<div class='content nopadding ohiden'>
+						<ul>
+						{% for fleet in planet.get_enemy_ships %}
+							<li>ETA: {{ fleet.eta }} - {{ fleet.planet }} - {{ fleet.get_ship_count }}</li>
+						{% endfor %}
+						</ul>
+					</div>
+	
+			{% endif %}
+			
+			{% if planet.get_allied_ships %}
+
+					<h3 style='background-color: green;'><span>Frotas Aliadas vindo em direção ao seu planeta</span></h3>
+					<div class='content nopadding ohiden'>
+						<ul>
+						{% for fleet in  planet.get_allied_ships %}
+							<li>ETA: {{ fleet.eta }} - {{ fleet.planet }} - {{ fleet.get_ship_count|intcomma }}</li>
+						{% endfor %}
+						<ul>
+					</div>
+
+			{% endif %}
+
+            
+			<div class='well'>
+            	<h3>Recursos</h3>
+                	<table class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <td>Tipo</td>
+                                <td>Asteróides</td>
+								<td align="right">Produção</td>
+                                <td align="right">Bônus</td>
+                                <td>Minas</td>
+                                <td align="right">Produção</td>
+                                <td align="right">Bônus</td>
+                                <td>Total por Turno</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Metal</td>
+                                <td>{{ planet.roids_metal|intcomma }}</td>
+								<td align="right">{{ planet.roids_metal_production|intcomma }}</td>
+								<td align="right">{{ planet.roids_bonus_str }}%</td>
+                                <td>{{ planet.mines_metal }}</td>
+                                <td align="right">{{ planet.mines_metal_production|intcomma }}</td>
+                                <td align="right">{{ planet.mines_bonus_str }}%</td>
+                                <td>{{ planet.total_metal_production|intcomma }}</td>
+                            </tr>
+							
+                            <tr class="even">
+                                <td>Cristal</td>
+                                <td>{{ planet.roids_cristal|intcomma }}</td>
+								<td align="right">{{ planet.roids_cristal_production|intcomma }}</td>
+								<td align="right">{{ planet.roids_bonus_str }}%</td>
+                                <td>{{ planet.mines_cristal }}</td>
+                                <td align="right">{{ planet.mines_cristal_production|intcomma }}</td>
+                                <td align="right">{{ planet.mines_bonus_str }}%</td>
+                                <td>{{ planet.total_cristal_production|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td>Urânio</td>
+                                <td>{{ planet.roids_uranium|intcomma }}</td>
+								<td align="right">{{ planet.roids_uranium_production|intcomma }}</td>
+								<td align="right">{{ planet.roids_bonus_str }}%</td>
+                                <td>{{ planet.mines_uranium }}</td>
+                                <td align="right">{{ planet.mines_uranium_production|intcomma }}</td>
+                                <td align="right">{{ planet.mines_bonus_str }}%</td>
+                                <td>{{ planet.total_uranium_production|intcomma }}</td>
+                            </tr>
+                            <tr class="even">
+                                <td>Ouro</td>
+                                <td>{{ planet.roids_gold|intcomma }}</td>
+								<td align="right">{{ planet.roids_gold_production|intcomma }}</td>
+								<td align="right">{{ planet.roids_bonus_str }}%</td>
+                                <td>{{ planet.mines_gold }}</td>
+                                <td align="right">{{ planet.mines_gold_production|intcomma }}</td>
+                                <td align="right">{{ planet.mines_bonus_str }} %</td>
+                                <td>{{ planet.total_gold_production|intcomma }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+          </div>
+			
+			
+			<div class='well'>
+				<h3>Naves</h3>
+             	<table class='table table-striped table-bordered'>
+                     <thead>
+                         <tr>
+                             <td>Nave</td>
+                             <td>Tipo</td>
+							 <td>Quantidade</td>
+                         </tr>
+                     </thead>
+                     <tbody>
+						{% for each in planet.get_ships %}
+							<tr class="{% cycle 'odd' 'even' %}">
+								<td>{{ each.ship.name }}</td>
+								<td>{{ each.ship.get_class_as_str }}</td>
+								<td>{{ each.quantity|intcomma }}</td>
+							</tr>
+						{% endfor %}
+                     </tbody>
+                 </table>
+			</div>
+  
+
+                <h3>Pontuação</h3>
+                <div class="content">
+                    
+                    <h1 class="prize">{{ planet.score|intcomma }} pontos</h1>
+                    <!--p>Estimatativa até o final do dia: <strong>{{ 3903531|intcomma }}</strong></p-->
+                	
+                    <br />
+                    <div class="one_half bright">
+						<h2>{{ planet.average_research_level|floatformat:"2" }}</h2>
+						<small>Nível Médio de Pesquisa</small>
+					</div>
+					
+					<div class="one_half last">
+						<h2 class="prize">{{ planet.buildings }}</h2>
+						<small>Construções</small>
+					</div>
+                    
+                </div><!-- content -->
+				
+       
+            	
+                <div class="well">
+                	<h3>Progresso</h3>
+                    <div class="progress progress-info progress-striped">{{ planet.current_research_str }} {% if planet.current_research %}({{ planet.get_research_percent|floatformat:"2" }}%) {% endif %}<div class="bar" style='width: {{ planet.get_research_percent|floatformat:"0" }}%;'></div></div><!-- progress -->
+                    
+                    <div class="progress progress-warning progress-striped">{{ planet.current_building_str }} {% if planet.current_building %}({{ planet.get_build_percent|floatformat:"2" }}%){% endif %}<div class="bar" style='width: {{ planet.get_build_percent|floatformat:"0" }}%;'></div></div><!-- progress -->
+				</div><!-- content -->
+      
+						
+				<div class="well" style='text-align: justify;'>
+                <h3>Missões</h3>
+                
+					<h3>Frota 1</h3>
+					<p>{{ fleet1.get_action }} {% if fleet1.eta %} - chegada em {{ fleet1.eta }} tick{{ fleet1.eta|pluralize }}{% endif %}</p>
+					
+					<h3>Frota 2</h3>
+					<p>{{ fleet2.get_action }} {% if fleet2.eta %} - chegada em {{ fleet2.eta }} tick{{ fleet2.eta|pluralize }}{% endif %}</p>
+					
+					<h3>Frota 3</h3>
+					<p>{{ fleet3.get_action }} {% if fleet3.eta %} - chegada em {{ fleet3.eta }} tick{{ fleet1.eta|pluralize }}{% endif %}</p>
+					
+                </div><!--content-->
+            
+{% endblock %}	

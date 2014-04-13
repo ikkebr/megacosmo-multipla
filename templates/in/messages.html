@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Mensagens{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Mensagens</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+		
+		<div class='well'>
+    	<h1>Mensagens</h1>
+		
+        <form action="{% url messages %}" method="post">
+        
+				<fieldset>
+                    <legend>Compor Mensagem</legend>
+                    
+                    
+                    	<label for="name">Alvo</label>
+                        <input type="text" name="x" class="input-mini" required placeholder='X'> : <input type="text" name="y" class="input-mini" required placeholder='Y'> : <input type="text" name="z" class="input-mini" required placeholder='Z'>
+                    
+					{% csrf_token %}
+					
+                    
+                    	<label for="email">Assunto</label>
+                        <input type="text" name="subject" class="input-large" required placeholder='Digite aqui o assunto'>
+                    
+                    
+                    
+                    	<label for="location">Mensagem</label>
+                        <textarea name="content" class="input-large" required placeholder='Digite aqui sua mensagem'></textarea>
+                    
+                    
+						<p>
+							<button type='submit' class='btn btn-primary'>Enviar Mensagem</button>
+						</p>
+                    
+                </fieldset>
+
+        </form>
+		</div>
+		
+		<div class='well'>
+			<h2>Lista de Mensagens</h2>
+                    
+					{% if message_list %}
+						{% for each in message_list %}
+						<p>
+							<span>De:</span>
+							{{ each.p_from.ruler }} de {{ each.p_from.name }} ({{ each.p_from.x }} : {{ each.p_from.y }} : {{ each.p_from.z }}) {{ each.date|naturaltime }}
+						</p>
+						
+						<p>
+							<span>Assunto</span>
+							{{ each.subject }}
+						</p>
+						
+						<p>
+							<div>{{ each.content|linebreaksbr }}</div>
+						</p>
+						
+						<p>
+							<form action='{% url remove_message each.id %}'><button type='submit' class='btn  btn-danger'>Excluir Mensagem</button> {% csrf_token %}</form>
+						</p>
+						{% endfor %}
+					{% else %}
+						<p>Nenhuma mensagem. Tente fazer novos amigos ou inimigos.</p>
+                    {% endif %}
+		</div>
+{% endblock %}	

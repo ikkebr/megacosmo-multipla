@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Ranking{% endblock %}
+
+{% block geral %}{% endblock %}
+{% block ranking %}class='current'{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Ranking</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+{% block content %}
+   	
+	<div class='well'>
+    	<h1>Ranking</h1>
+				
+			
+				
+				<table class='table table-bordered table-striped'>
+				
+					<thead>
+						<tr>
+							<th>Rank</th>
+							<th>Coords</th>
+							<th>Governante</th>
+							<th>Planeta</th>
+							<th>Score</th>
+							<th>Asteróides</th>
+							<th>Raça</th>
+						</tr>
+					</thead>
+				
+						<tbody>
+						
+					{% if planets %}
+						{% for each in planets %}
+						
+
+									
+								
+								
+										<tr 
+											{% if planet == each %}
+												style='background-color: #bbb;'
+											{% else %}
+												{% if each.x == planet.x and each.y == planet.y %}
+													style='background-color: #aaa;'
+												{% endif %}
+											{% endif %}>
+											
+											<td align='center'>{{ forloop.counter|ordinal }}</td>
+											<td align='center'><a href='{% url galaxy each.x each.y %}'>{{ each.x }}:{{ each.y }}:{{ each.z }}</a></td>
+											<td align='center'>{{ each.ruler }}</td>
+											<td>{{ each.name }}</td>
+											<td align='center'>{{ each.score|intcomma }}</td>
+											<td align='center'>{{ each.roids|intcomma }}</td>
+											<td align='center'>{{ each.get_race }}</td>
+										</td>
+						
+							
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan='4' align='center'>Não existem planetas no ranking.</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+	</div>
+{% endblock %}	

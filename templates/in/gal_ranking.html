@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Ranking das Galáxias{% endblock %}
+
+{% block geral %}{% endblock %}
+{% block ranking %}class='current'{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumb">
+    	<li><a href="{% url overview %}">Visão Geral</a>  <span class="divider">/</span></li>
+        <li class="active">Ranking das Galáxias</li>
+    </div><!-- breadcrumbs -->
+{% endblock %}
+
+
+
+{% block content %}
+      	<h1 class="pageTitle">Ranking das Galáxias</h1>
+				
+			
+				
+				<table class='table table-striped table-bordered'>
+				
+					<thead>
+						<tr>
+							<th>Rank</th>
+							<th>Coords</th>
+							<th>Galáxia</th>
+							<th>Score</th>
+							<th>Asteróides</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+						
+					{% if galaxys %}
+						{% for each in galaxys %}
+						
+
+									
+								
+								
+										<tr>
+											<td align='center'>{{ forloop.counter|ordinal }}</td>
+											<td align='center'><a href='{% url galaxy each.x each.y %}'>{{ each.x }}:{{ each.y }}</a></td>
+											<td>{{ each.name }}</td>
+											<td align='center'>{{ each.score|intcomma }}</td>
+											<td align='center'>{{ each.roids|intcomma }}</td>
+										</td>
+						
+							
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan='4' align='center'>Não existem galáxias no ranking.</td>
+						</tr>
+					{% endif %}
+					</tbody>
+				</table>
+{% endblock %}	
